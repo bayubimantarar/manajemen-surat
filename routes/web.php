@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => 'autentikasi'], function(){
+    Route::get('/form-login', [
+        'uses' => 'Authentication\PenggunaAuthenticationController@loginForm',
+        'as' => 'autentikasi.login.form'
+    ]);
+    Route::post('/login', [
+        'uses' => 'Authentication\PenggunaAuthenticationController@login',
+        'as' => 'autentikasi.login'
+    ]);
 });
