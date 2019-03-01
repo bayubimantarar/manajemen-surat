@@ -138,6 +138,118 @@ class JabatanTest extends TestCase
      * @test
      * @group JabatanTest
      */
+    public function storeJabatanEmptyKode()
+    {
+        # create pengguna data
+        $pengguna = Factory(Pengguna::class)
+            ->create();
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => NULL,
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertSessionHasErrors()
+            ->assertRedirect('/jabatan/form-tambah');
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @group JabatanTest
+     */
+    public function storeJabatanEmptyNama()
+    {
+        # create pengguna data
+        $pengguna = Factory(Pengguna::class)
+            ->create();
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'KADIN',
+                'nama' => NULL
+            ])
+            ->assertSessionHasErrors()
+            ->assertRedirect('/jabatan/form-tambah');
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @group JabatanTest
+     */
+    public function storeJabatanKodeisExist()
+    {
+        # create pengguna data
+        $pengguna = Factory(Pengguna::class)
+            ->create();
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertRedirect('/jabatan');
+
+        $checkJabatanData = $this
+            ->assertDatabaseHas('jabatan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ]);
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertSessionHasErrors()
+            ->assertRedirect('/jabatan/form-tambah');
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @group JabatanTest
+     */
+    public function storeJabatanNamaisExist()
+    {
+        # create pengguna data
+        $pengguna = Factory(Pengguna::class)
+            ->create();
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertRedirect('/jabatan');
+
+        $checkJabatanData = $this
+            ->assertDatabaseHas('jabatan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ]);
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'SKR',
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertSessionHasErrors()
+            ->assertRedirect('/jabatan/form-tambah');
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @group JabatanTest
+     */
     public function updateJabatan()
     {
         # create pengguna data

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
+use App\Http\Requests\JabatanRequest;
 
 class jabatanController extends Controller
 {
@@ -14,7 +15,7 @@ class jabatanController extends Controller
      */
     public function index()
     {
-        //
+        return view('jabatan.jabatan');
     }
 
     /**
@@ -24,7 +25,7 @@ class jabatanController extends Controller
      */
     public function create()
     {
-        //
+        return view('jabatan.form_create');
     }
 
     /**
@@ -33,11 +34,11 @@ class jabatanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(JabatanRequest $jabatanRequest)
     {
         # set variable
-        $kode = $request->kode;
-        $nama = $request->nama;
+        $kode = $jabatanRequest->kode;
+        $nama = $jabatanRequest->nama;
 
         # set data array
         $jabatanData = [
@@ -70,6 +71,8 @@ class jabatanController extends Controller
     public function edit($id)
     {
         $jabatanData = Jabatan::findOrFail($id);
+
+        return view('jabatan.form_edit', compact('jabatanData'));
     }
 
     /**
