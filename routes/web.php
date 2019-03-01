@@ -29,28 +29,54 @@ Route::group(['prefix' => 'autentikasi'], function(){
 Route::group(['middleware' => 'auth:pengguna'], function(){
     Route::group(['prefix' => 'jabatan'], function(){
         Route::get('/', [
-            'uses' => 'jabatanController@index',
+            'uses' => 'JabatanController@index',
             'as' => 'jabatan'
         ]);
         Route::get('/form-tambah', [
-            'uses' => 'jabatanController@create',
+            'uses' => 'JabatanController@create',
             'as' => 'jabatan.form.create'
         ]);
         Route::get('/form-ubah/{id}', [
-            'uses' => 'jabatanController@edit',
+            'uses' => 'JabatanController@edit',
             'as' => 'jabatan.form.edit'
         ]);
         Route::post('/simpan', [
-            'uses' => 'jabatanController@store',
+            'uses' => 'JabatanController@store',
             'as' => 'jabatan.store'
         ]);
         Route::put('/ubah/{id}', [
-            'uses' => 'jabatanController@update',
+            'uses' => 'JabatanController@update',
             'as' => 'jabatan.update'
         ]);
         Route::delete('/hapus/{id}', [
-            'uses' => 'jabatanController@destroy',
+            'uses' => 'JabatanController@destroy',
             'as' => 'jabatan.delete'
+        ]);
+    });
+    Route::group(['prefix' => 'pegawai'], function(){
+        Route::get('/', [
+            'uses' => 'PegawaiController@index',
+            'as' => 'pegawai'
+        ]);
+        Route::get('/form-tambah', [
+            'uses' => 'PegawaiController@create',
+            'as' => 'pegawai.form.create'
+        ]);
+        Route::get('/form-ubah/{id}', [
+            'uses' => 'PegawaiController@edit',
+            'as' => 'pegawai.form.edit'
+        ]);
+        Route::post('/simpan', [
+            'uses' => 'PegawaiController@store',
+            'as' => 'pegawai.store'
+        ]);
+        Route::put('/ubah/{id}', [
+            'uses' => 'PegawaiController@update',
+            'as' => 'pegawai.update'
+        ]);
+        Route::delete('/hapus/{id}', [
+            'uses' => 'PegawaiController@destroy',
+            'as' => 'pegawai.delete'
         ]);
     });
 });

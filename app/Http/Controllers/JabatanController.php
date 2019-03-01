@@ -6,7 +6,7 @@ use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use App\Http\Requests\JabatanRequest;
 
-class jabatanController extends Controller
+class JabatanController extends Controller
 {
     /**
      * Display a listing of the resource.

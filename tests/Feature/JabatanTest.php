@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\Pegawai;
 use App\Models\Pengguna;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +21,7 @@ class JabatanTest extends TestCase
     {
         $getJabatan = $this
             ->get('/jabatan')
-            ->assertRedirect('/autentikasi/form-login');
+            ->assertStatus(302);
     }
 
     /**
@@ -74,7 +75,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $getEditJabatan = $this
             ->actingAs($pengguna, 'pengguna')
@@ -99,7 +100,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $getEditJabatan = $this
             ->actingAs($pengguna, 'pengguna')
@@ -124,7 +125,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $checkJabatanData = $this
             ->assertDatabaseHas('jabatan', [
@@ -151,7 +152,7 @@ class JabatanTest extends TestCase
                 'nama' => 'Kepala Dinas'
             ])
             ->assertSessionHasErrors()
-            ->assertRedirect('/jabatan/form-tambah');
+            ->assertStatus(302);
     }
 
     /**
@@ -172,7 +173,7 @@ class JabatanTest extends TestCase
                 'nama' => NULL
             ])
             ->assertSessionHasErrors()
-            ->assertRedirect('/jabatan/form-tambah');
+            ->assertStatus(302);
     }
 
     /**
@@ -192,7 +193,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $checkJabatanData = $this
             ->assertDatabaseHas('jabatan', [
@@ -207,7 +208,7 @@ class JabatanTest extends TestCase
                 'nama' => 'Kepala Dinas'
             ])
             ->assertSessionHasErrors()
-            ->assertRedirect('/jabatan/form-tambah');
+            ->assertStatus(302);
     }
 
     /**
@@ -227,7 +228,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $checkJabatanData = $this
             ->assertDatabaseHas('jabatan', [
@@ -242,7 +243,7 @@ class JabatanTest extends TestCase
                 'nama' => 'Kepala Dinas'
             ])
             ->assertSessionHasErrors()
-            ->assertRedirect('/jabatan/form-tambah');
+            ->assertStatus(302);
     }
 
     /**
@@ -262,7 +263,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $updateJabatan = $this
             ->actingAs($pengguna, 'pengguna')
@@ -270,7 +271,7 @@ class JabatanTest extends TestCase
                 'kode' => 'SKR',
                 'nama' => 'Sekretaris'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $checkJabatanDataAfterUpdate = $this
             ->assertDatabaseHas('jabatan', [
@@ -296,7 +297,7 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $updateJabatan = $this
             ->actingAs($pengguna, 'pengguna')
@@ -324,12 +325,12 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $delete = $this
             ->actingAs($pengguna, 'pengguna')
             ->delete('/jabatan/hapus/1')
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $checkJabatanDataAfterDelete = $this
             ->assertDatabaseMissing('jabatan', [
@@ -355,11 +356,48 @@ class JabatanTest extends TestCase
                 'kode' => 'KADIN',
                 'nama' => 'Kepala Dinas'
             ])
-            ->assertRedirect('/jabatan');
+            ->assertStatus(302);
 
         $delete = $this
             ->actingAs($pengguna, 'pengguna')
             ->delete('/jabatan/hapus/2')
             ->assertStatus(404);
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @group JabatanTest
+     */
+    public function pegawaiDeletedWhenJabatanDelete()
+    {
+        # create pengguna data
+        $pengguna = Factory(Pengguna::class)
+            ->create();
+
+        $storeJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->post('/jabatan/simpan', [
+                'kode' => 'KADIN',
+                'nama' => 'Kepala Dinas'
+            ])
+            ->assertStatus(302);
+
+        $createPegawai = Factory(Pegawai::class)
+            ->create();
+
+        $deleteJabatan = $this
+            ->actingAs($pengguna, 'pengguna')
+            ->delete('/jabatan/hapus/1')
+            ->assertStatus(302);
+
+        $checkPegawaiData = $this
+            ->assertDatabaseMissing('pegawai', [
+                'jabatan_id' => 1,
+                'nama' => 'Bayu Bimantara',
+                'nomor_telepon' => '0895332055486',
+                'email' => 'bayubimantarar@gmail.com',
+                'alamat' => 'Kota Baru Parahyangan Tatar Wangsakerta A1 No 77'
+            ]);
     }
 }

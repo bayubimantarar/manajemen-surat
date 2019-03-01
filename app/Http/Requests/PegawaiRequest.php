@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class JabatanRequest extends FormRequest
+class PegawaiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class JabatanRequest extends FormRequest
     public function rules()
     {
         return [
-            'kode' => 'required|unique:jabatan',
-            'nama' => 'required|unique:jabatan'
+            'jabatan_id' => 'required',
+            'nama' => 'required',
+            'nomor_telepon' => 'required',
+            'email' => 'required|email|unique:pegawai',
+            'alamat' => 'required'
         ];
     }
 }
