@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Authentication;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PenggunaAuthenticationRequest;
@@ -30,6 +31,24 @@ class PenggunaAuthenticationController extends Controller
             'email' => $email,
             'password' => $password
         ];
+
+        if(Auth::guard('pengguna')->attempt($dataLogin)){
+            return redirect('/');
+        }
+
+        return redirect('/autentikasi/form-login')
+            ->withErrors([
+                'notification' => 'Akun tidak ditemukan! Periksa kembali email atau password.'
+            ]);
+    }
+
+    /**
+     * Block comment
+     */
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        $request->session()->regenerate();
 
         return redirect('/autentikasi/form-login');
     }

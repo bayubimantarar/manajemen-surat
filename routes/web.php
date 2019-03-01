@@ -20,4 +20,8 @@ Route::group(['prefix' => 'autentikasi'], function(){
         'uses' => 'Authentication\PenggunaAuthenticationController@login',
         'as' => 'autentikasi.login'
     ]);
+    Route::post('/logout', [
+        'uses' => 'Authentication\PenggunaAuthenticationController@logout',
+        'as' => 'autentikasi.logout'
+    ]);
 });
