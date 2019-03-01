@@ -33,7 +33,7 @@ class PenggunaAuthenticationTest extends TestCase
         $createPengguna = Factory(Pengguna::class)
             ->create();
 
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => 'bayubimantarar@gmail.com',
                 'password' => 'secret'
@@ -48,7 +48,7 @@ class PenggunaAuthenticationTest extends TestCase
      */
     public function attemptLoginEmptyEmail()
     {
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => NULL,
                 'password' => 'secret'
@@ -64,7 +64,7 @@ class PenggunaAuthenticationTest extends TestCase
      */
     public function attemptLoginInvalidEmailFormat()
     {
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => 'bayubimantara',
                 'password' => 'secret'
@@ -80,7 +80,7 @@ class PenggunaAuthenticationTest extends TestCase
      */
     public function attemptLoginEmptyPassword()
     {
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => 'bayubimantarar@gmail.com',
                 'password' => NULL
@@ -96,7 +96,7 @@ class PenggunaAuthenticationTest extends TestCase
      */
     public function attemptLoginInvalidEmailFormatandEmptyPassword()
     {
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => 'bayubimantara',
                 'password' => NULL
@@ -112,7 +112,7 @@ class PenggunaAuthenticationTest extends TestCase
      */
     public function attemptLoginEmptyEmailandPassword()
     {
-        $getLoginForm = $this
+        $attempLogin = $this
             ->post('/autentikasi/login', [
                 'email' => NULL,
                 'password' => NULL
@@ -131,7 +131,7 @@ class PenggunaAuthenticationTest extends TestCase
         $createPengguna = Factory(Pengguna::class)
             ->create();
 
-        $getLoginForm = $this
+        $logout = $this
             ->post('/autentikasi/logout')
             ->assertRedirect('/autentikasi/form-login');
     }
