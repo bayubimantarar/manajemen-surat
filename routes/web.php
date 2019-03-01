@@ -25,3 +25,32 @@ Route::group(['prefix' => 'autentikasi'], function(){
         'as' => 'autentikasi.logout'
     ]);
 });
+
+Route::group(['middleware' => 'auth:pengguna'], function(){
+    Route::group(['prefix' => 'jabatan'], function(){
+        Route::get('/', [
+            'uses' => 'jabatanController@index',
+            'as' => 'jabatan'
+        ]);
+        Route::get('/form-tambah', [
+            'uses' => 'jabatanController@create',
+            'as' => 'jabatan.form.create'
+        ]);
+        Route::get('/form-ubah/{id}', [
+            'uses' => 'jabatanController@edit',
+            'as' => 'jabatan.form.edit'
+        ]);
+        Route::post('/simpan', [
+            'uses' => 'jabatanController@store',
+            'as' => 'jabatan.store'
+        ]);
+        Route::put('/ubah/{id}', [
+            'uses' => 'jabatanController@update',
+            'as' => 'jabatan.update'
+        ]);
+        Route::delete('/hapus/{id}', [
+            'uses' => 'jabatanController@destroy',
+            'as' => 'jabatan.delete'
+        ]);
+    });
+});
