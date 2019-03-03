@@ -6,6 +6,7 @@ use Faker\Generator as Faker;
 $factory->define(Pengguna::class, function (Faker $faker) {
     return [
         'email' => 'bayubimantarar@gmail.com',
-        'password' => bcrypt('secret')
+        'password' => bcrypt('secret'),
+        'role' => 'Sekretaris'
     ];
 });

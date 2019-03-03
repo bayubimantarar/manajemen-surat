@@ -33,7 +33,8 @@ class PenggunaAuthenticationController extends Controller
         ];
 
         if(Auth::guard('pengguna')->attempt($dataLogin)){
-            return redirect('/');
+            return redirect()
+                ->intended();
         }
 
         return redirect('/autentikasi/form-login')

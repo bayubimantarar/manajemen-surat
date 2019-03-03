@@ -13,6 +13,7 @@ class Pengguna extends Authenticatable
     protected $guard = 'pengguna';
     protected $fillable = [
         'email',
-        'password'
+        'password',
+        'role'
     ];
 }

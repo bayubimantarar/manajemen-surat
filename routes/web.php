@@ -27,7 +27,10 @@ Route::group(['prefix' => 'autentikasi'], function(){
 });
 
 Route::group(['middleware' => 'auth:pengguna'], function(){
-    Route::group(['prefix' => 'jabatan'], function(){
+    Route::group([
+        'prefix' => 'jabatan',
+        'middleware' => 'role-super-admin'
+    ], function() {
         Route::get('/', [
             'uses' => 'JabatanController@index',
             'as' => 'jabatan'

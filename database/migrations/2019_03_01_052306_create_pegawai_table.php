@@ -15,7 +15,7 @@ class CreatePegawaiTable extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->biginteger('jabatan_id')->unsigned();
+            $table->bigInteger('jabatan_id')->unsigned();
             $table->string('nama');
             $table->string('nomor_telepon');
             $table->string('email')->unique();
