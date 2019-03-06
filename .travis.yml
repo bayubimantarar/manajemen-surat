@@ -13,6 +13,7 @@ install:
 
 before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - mysql -e 'create database homestead;'
   - php artisan serve &
 
 script:
