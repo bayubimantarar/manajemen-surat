@@ -39,7 +39,7 @@ class PenggunaAuthenticationController extends Controller
 
         return redirect('/autentikasi/form-login')
             ->withErrors([
-                'notification' => 'Akun tidak ditemukan! Periksa kembali email atau password.'
+                'notification' => 'Akun tidak ditemukan! Periksa kembali email atau kata sandi.'
             ]);
     }
 

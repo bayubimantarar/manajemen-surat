@@ -30,4 +30,18 @@ class PenggunaAuthenticationRequest extends FormRequest
             'password' => 'required'
         ];
     }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email perlu diisi!',
+            'email.email' => 'Format email tidak sesuai!',
+            'password.required' => 'Kata sandi perlu diisi!'
+        ];
+    }
 }

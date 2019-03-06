@@ -14,21 +14,18 @@ class PenggunaTableSeeder extends Seeder
         $truncatePengguna = DB::table('pengguna')
             ->truncate();
 
-        $createPengguna = Factory(App\Models\Pengguna::class)
-            ->create();
-
-        // $createPengguna = DB::table('pengguna')
-        //     ->insert([
-        //         [
-        //             'email' => 'bayubimantarar@gmail.com',
-        //             'password' => bcrypt('secret'),
-        //             'role' => 'Super Admin'
-        //         ],
-        //         [
-        //             'email' => 'aryabintangbismaka@gmail.com',
-        //             'password' => bcrypt('secret'),
-        //             'role' => 'Sekretaris'
-        //         ]
-        //     ]);
+        $createPengguna = DB::table('pengguna')
+            ->insert([
+                [
+                    'email' => 'bayubimantarar@gmail.com',
+                    'password' => bcrypt('secret'),
+                    'role' => 'Super Admin'
+                ],
+                [
+                    'email' => 'restiwulandari@gmail.com',
+                    'password' => bcrypt('secret'),
+                    'role' => 'Sekretaris'
+                ]
+            ]);
     }
 }
