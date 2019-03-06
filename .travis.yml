@@ -14,6 +14,8 @@ install:
 before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - mysql -e 'create database suratapp;'
+  - php artisan migrate
+  - php artisan db:seed
   - php artisan serve &
 
 script:
