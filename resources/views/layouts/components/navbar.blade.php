@@ -27,11 +27,18 @@
                 <i class="fa fa-envelope-open-text"></i> Surat Keluar
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/pegawai">
-                <i class="fa fa-users"></i> Pegawai
-            </a>
-          </li>
+          @if(Auth::guard('pengguna')->User()->role == "Super Admin")
+            <li class="nav-item">
+                <a class="nav-link" href="/jabatan">
+                    <i class="fa fa-sort-alpha-up"></i> Jabatan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pegawai">
+                    <i class="fa fa-users"></i> Pegawai
+                </a>
+              </li>
+          @endif
         </ul>
         <!-- right navbar -->
         <ul class="navbar-nav">

@@ -90,6 +90,7 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $pegawai->links() }}
                 </div>
               </div>
             </div>

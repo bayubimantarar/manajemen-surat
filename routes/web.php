@@ -60,30 +60,33 @@ Route::group(['middleware' => 'auth:pengguna'], function(){
             'as' => 'jabatan.delete'
         ]);
     });
-    Route::group(['prefix' => 'pegawai'], function(){
-        Route::get('/', [
-            'uses' => 'PegawaiController@index',
-            'as' => 'pegawai'
-        ]);
-        Route::get('/form-tambah', [
-            'uses' => 'PegawaiController@create',
-            'as' => 'pegawai.form.create'
-        ]);
-        Route::get('/form-ubah/{id}', [
-            'uses' => 'PegawaiController@edit',
-            'as' => 'pegawai.form.edit'
-        ]);
-        Route::post('/simpan', [
-            'uses' => 'PegawaiController@store',
-            'as' => 'pegawai.store'
-        ]);
-        Route::put('/ubah/{id}', [
-            'uses' => 'PegawaiController@update',
-            'as' => 'pegawai.update'
-        ]);
-        Route::delete('/hapus/{id}', [
-            'uses' => 'PegawaiController@destroy',
-            'as' => 'pegawai.delete'
-        ]);
+    Route::group([
+            'prefix' => 'pegawai',
+            'middleware' => 'role-super-admin'
+        ], function() {
+            Route::get('/', [
+                'uses' => 'PegawaiController@index',
+                'as' => 'pegawai'
+            ]);
+            Route::get('/form-tambah', [
+                'uses' => 'PegawaiController@create',
+                'as' => 'pegawai.form.create'
+            ]);
+            Route::get('/form-ubah/{id}', [
+                'uses' => 'PegawaiController@edit',
+                'as' => 'pegawai.form.edit'
+            ]);
+            Route::post('/simpan', [
+                'uses' => 'PegawaiController@store',
+                'as' => 'pegawai.store'
+            ]);
+            Route::put('/ubah/{id}', [
+                'uses' => 'PegawaiController@update',
+                'as' => 'pegawai.update'
+            ]);
+            Route::delete('/hapus/{id}', [
+                'uses' => 'PegawaiController@destroy',
+                'as' => 'pegawai.delete'
+            ]);
     });
 });

@@ -107,9 +107,7 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                                     id=""
                                     class="form-control {{ $errors->has('alamat') ? ' is-invalid' : '' }}"
                                     rows="5"
-                                >
-                                    {{ old('alamat') }}
-                                </textarea>
+                                >{{ old('alamat') }}</textarea>
                                 @if($errors->has('alamat'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('alamat') }}</strong>

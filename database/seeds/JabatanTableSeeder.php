@@ -18,11 +18,15 @@ class JabatanTableSeeder extends Seeder
             ->insert([
                 [
                     'kode' => 'KADIN',
-                    'nama' => 'Kepala Dinas'
+                    'nama' => 'Kepala Dinas',
+                    'created_at' => Carbon\Carbon::now(),
+                    'updated_at' => Carbon\Carbon::now()
                 ],
                 [
                     'kode' => 'SKR',
-                    'nama' => 'Sekretaris'
+                    'nama' => 'Sekretaris',
+                    'created_at' => Carbon\Carbon::now(),
+                    'updated_at' => Carbon\Carbon::now()
                 ]
             ]);
     }

@@ -15,7 +15,9 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        return view('jabatan.jabatan');
+        $jabatan = Jabatan::paginate(5);
+
+        return view('jabatan.jabatan', compact('jabatan'));
     }
 
     /**
@@ -70,9 +72,9 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $jabatanData = Jabatan::findOrFail($id);
+        $jabatan = Jabatan::findOrFail($id);
 
-        return view('jabatan.form_edit', compact('jabatanData'));
+        return view('jabatan.form_edit', compact('jabatan'));
     }
 
     /**
@@ -110,10 +112,11 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        $checkJabatanData = Jabatan::findOrFail($id);
-
         $delete = Jabatan::destroy($id);
 
-        return redirect('/jabatan');
+        return redirect('/jabatan')
+            ->with([
+                'notification' => 'Data berhasil dihapus!'
+            ]);
     }
 }

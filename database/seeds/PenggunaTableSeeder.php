@@ -19,12 +19,16 @@ class PenggunaTableSeeder extends Seeder
                 [
                     'email' => 'bayubimantarar@gmail.com',
                     'password' => bcrypt('secret'),
-                    'role' => 'Super Admin'
+                    'role' => 'Super Admin',
+                    'created_at' => Carbon\Carbon::now(),
+                    'updated_at' => Carbon\Carbon::now()
                 ],
                 [
                     'email' => 'restiwulandari@gmail.com',
                     'password' => bcrypt('secret'),
-                    'role' => 'Sekretaris'
+                    'role' => 'Sekretaris',
+                    'created_at' => Carbon\Carbon::now(),
+                    'updated_at' => Carbon\Carbon::now()
                 ]
             ]);
     }
