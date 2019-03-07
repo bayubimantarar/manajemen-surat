@@ -33,12 +33,10 @@
                     <hr />
                     <!-- card content -->
                     <form method="post" action="/autentikasi/login">
-                        @if(!empty($errors->all()))
-                            <ul>
-                                @foreach($errors->all() as $errorItem)
-                                    <li>{{ $errorItem }}</li>
-                                @endforeach
-                            </ul>
+                        @if($errors->has('notification'))
+                            <p class="text-danger">
+                                {{ $errors->first('notification') }}
+                            </p>
                         @endif
                         <input
                             type="hidden"
@@ -53,8 +51,14 @@
                                 type="text"
                                 name="email"
                                 id="email"
-                                class="form-control"
+                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                value="{{ old('email') }}"
                             />
+                            @if($errors->has('email'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="password">
@@ -64,15 +68,26 @@
                                 type="password"
                                 name="password"
                                 id="password"
-                                class="form-control"
+                                class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                             />
+                            @if($errors->has('password'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
                         </div>
+                        <p>
                         <button
                             type="submit"
                             class="btn btn-primary"
                         >
                             <i class="fa fa-sign-in-alt"></i> Masuk
                         </button>
+                        &nbsp;
+                        <a href="#">
+                            Lupa kata sandi?
+                        </a>
+                        </p>
                     </form>
                   </div>
                 </div>

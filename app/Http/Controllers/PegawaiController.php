@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jabatan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use App\Http\Requests\PegawaiRequest;
@@ -15,7 +16,9 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        return view('pegawai.pegawai');
+        $pegawai = Pegawai::all();
+
+        return view('pegawai.pegawai', compact('pegawai'));
     }
 
     /**
@@ -25,7 +28,9 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('pegawai.form_create');
+        $jabatan = Jabatan::all();
+
+        return view('pegawai.form_create', compact('jabatan'));
     }
 
     /**
@@ -55,7 +60,10 @@ class PegawaiController extends Controller
         # store
         $storePegawai = Pegawai::create($pegawaiData);
 
-        return redirect('/pegawai');
+        return redirect('/pegawai')
+            ->with([
+                'notification' => 'Data berhasil disimpan!'
+            ]);
     }
 
     /**
@@ -78,6 +86,10 @@ class PegawaiController extends Controller
     public function edit($id)
     {
         $checkPegawaiData = Pegawai::findOrFail($id);
+        $pegawai = $checkPegawaiData;
+        $jabatan = Jabatan::all();
+
+        return view('pegawai.form_edit', compact('pegawai', 'jabatan'));
     }
 
     /**
@@ -120,6 +132,11 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletePegawai = Pegawai::destroy($id);
+
+        return redirect('/pegawai')
+            ->with([
+                'notification' => 'Data berhasil dihapus!'
+            ]);
     }
 }

@@ -11,14 +11,19 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
             <div class="card">
               <div class="card-body">
                 <h3 class="card-title">
-                    Tambah Pegawai
+                    Ubah Pegawai
                 </h3>
                 <hr />
-                <form action="/pegawai/simpan" method="post">
+                <form action="/pegawai/ubah/{{ $pegawai->id }}" method="post">
                     <input
                         type="hidden"
                         name="_token"
                         value="{{ csrf_token()}}"
+                    />
+                    <input
+                        type="hidden"
+                        name="_method"
+                        value="put"
                     />
                     <div class="form-group">
                         <div class="row">
@@ -46,7 +51,7 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                                     type="text"
                                     name="nama"
                                     class="form-control {{ $errors->has('nama') ? ' is-invalid' : '' }}"
-                                    value="{{ old('nama') }}"
+                                    value="{{ $pegawai->nama }}"
                                 />
                                 @if($errors->has('nama'))
                                     <span class="invalid-feedback">
@@ -66,7 +71,7 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                                     type="number"
                                     name="nomor_telepon"
                                     class="form-control {{ $errors->has('nomor_telepon') ? ' is-invalid' : '' }}"
-                                    value="{{ old('nomor_telepon') }}"
+                                    value="{{ $pegawai->nomor_telepon }}"
                                 />
                                 @if($errors->has('nomor_telepon'))
                                     <span class="invalid-feedback">
@@ -86,7 +91,7 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                                     type="text"
                                     name="email"
                                     class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                    value="{{ old('email') }}"
+                                    value="{{ $pegawai->email }}"
                                 />
                                 @if($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -104,12 +109,10 @@ Dashboard &raquo; Pegawai | Aplikasi Manajemen Surat
                                 </label>
                                 <textarea
                                     name="alamat"
-                                    id=""
+                                    id="alamat"
                                     class="form-control {{ $errors->has('alamat') ? ' is-invalid' : '' }}"
                                     rows="5"
-                                >
-                                    {{ old('alamat') }}
-                                </textarea>
+                                >{{ $pegawai->alamat }}</textarea>
                                 @if($errors->has('alamat'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('alamat') }}</strong>
