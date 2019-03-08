@@ -15,7 +15,8 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        $jabatan = Jabatan::paginate(5);
+        $jabatan = Jabatan::orderBy('created_at', 'DESC')
+            ->paginate(5);
 
         return view('jabatan.jabatan', compact('jabatan'));
     }

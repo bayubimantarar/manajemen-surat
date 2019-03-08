@@ -147,6 +147,50 @@ class JabatanTest extends DuskTestCase
      * @test
      * @return void
      */
+    public function updateJabatanSameData()
+    {
+        # find super admin
+        $pengguna = \App\Models\Pengguna::find(1);
+
+        $this->browse(function (Browser $browser) use($pengguna) {
+            $browser
+                ->loginAs($pengguna, 'pengguna')
+                ->visit('/jabatan')
+                ->clickLink('Ubah')
+                ->type('kode', 'STF')
+                ->type('nama', 'Staff')
+                ->press('Simpan')
+                ->assertPathIs('/jabatan');
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     */
+    public function updadateJabatan()
+    {
+        # find super admin
+        $pengguna = \App\Models\Pengguna::find(1);
+
+        $this->browse(function (Browser $browser) use($pengguna) {
+            $browser
+                ->loginAs($pengguna, 'pengguna')
+                ->visit('/jabatan')
+                ->clickLink('Ubah')
+                ->type('kode', 'SPV')
+                ->type('nama', 'Supervisor')
+                ->press('Simpan')
+                ->assertPathIs('/jabatan');
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     */
     public function deleteJabatan()
     {
         # find super admin
