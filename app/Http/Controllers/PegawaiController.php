@@ -139,4 +139,19 @@ class PegawaiController extends Controller
                 'notification' => 'Data berhasil dihapus!'
             ]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function apiFindPegawaiByBagian($jabatan_id)
+    {
+        $pegawai = Pegawai::where('jabatan_id', $jabatan_id)
+            ->get();
+
+        return response()
+            ->json($pegawai);
+    }
 }

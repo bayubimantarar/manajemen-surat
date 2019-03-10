@@ -17,6 +17,7 @@ class CreateJabatanTable extends Migration
             $table->bigIncrements('id');
             $table->string('kode', 75)->unique();
             $table->string('nama', 150)->unique();
+            $table->integer('posisi');
             $table->timestamps();
         });
     }

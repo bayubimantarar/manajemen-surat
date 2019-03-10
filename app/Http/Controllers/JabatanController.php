@@ -15,7 +15,7 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        $jabatan = Jabatan::orderBy('created_at', 'DESC')
+        $jabatan = Jabatan::orderByCreatedAtDesc()
             ->paginate(5);
 
         return view('jabatan.jabatan', compact('jabatan'));
@@ -42,11 +42,13 @@ class JabatanController extends Controller
         # set variable
         $kode = $jabatanRequest->kode;
         $nama = $jabatanRequest->nama;
+        $posisi = $jabatanRequest->posisi;
 
         # set data array
         $jabatanData = [
             'kode' => $kode,
-            'nama' => $nama
+            'nama' => $nama,
+            'posisi' => $posisi
         ];
 
         $storeJabatan = Jabatan::create($jabatanData);
@@ -85,18 +87,20 @@ class JabatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(JabatanRequest $jabatanRequest, $id)
     {
         $checkJabatanData = Jabatan::findOrFail($id);
 
         # set variable
-        $kode = $request->kode;
-        $nama = $request->nama;
+        $kode = $jabatanRequest->kode;
+        $nama = $jabatanRequest->nama;
+        $posisi = $jabatanRequest->posisi;
 
         # set data array
         $jabatanData = [
             'kode' => $kode,
-            'nama' => $nama
+            'nama' => $nama,
+            'posisi' => $posisi
         ];
 
         $updateJabatan = Jabatan::where('id', $id)
@@ -113,7 +117,9 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Jabatan::destroy($id);
+        $checkJabatanData = Jabatan::findOrFail($id);
+
+        $deleteJabatan = Jabatan::destroy($id);
 
         return redirect('/jabatan')
             ->with([

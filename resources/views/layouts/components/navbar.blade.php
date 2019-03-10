@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">
-        <img src="/img/logo-surat.png" width="40" height="40" alt="">
+        <img src="/assets/img/logo-surat.png" width="40" height="40" alt="">
         Aplikasi Manajemen Surat
     </a>
     <button
@@ -18,7 +18,7 @@
         <!-- left navbar -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/surat-masuk">
                 <i class="fa fa-envelope"></i> Surat Masuk
             </a>
           </li>

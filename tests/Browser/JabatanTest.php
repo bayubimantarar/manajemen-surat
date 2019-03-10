@@ -56,6 +56,7 @@ class JabatanTest extends DuskTestCase
                 ->visit('/jabatan/form-tambah')
                 ->type('kode', 'STF')
                 ->type('nama', 'Staff')
+                ->select('posisi', 'Non-pimpinan')
                 ->press('Simpan')
                 ->assertPathIs('/jabatan');
         });
@@ -77,6 +78,7 @@ class JabatanTest extends DuskTestCase
                 ->visit('/jabatan/form-tambah')
                 ->type('kode', NULL)
                 ->type('nama', 'Staff')
+                ->select('posisi', 'Non-pimpinan')
                 ->press('Simpan')
                 ->assertPathIs('/jabatan/form-tambah');
         });
@@ -98,6 +100,7 @@ class JabatanTest extends DuskTestCase
                 ->visit('/jabatan/form-tambah')
                 ->type('kode', 'STF')
                 ->type('nama', NULL)
+                ->select('posisi', 'Non-pimpinan')
                 ->assertPathIs('/jabatan/form-tambah');
         });
     }
@@ -118,6 +121,7 @@ class JabatanTest extends DuskTestCase
                 ->visit('/jabatan/form-tambah')
                 ->type('kode', 'STF')
                 ->type('nama', 'Staff')
+                ->select('posisi', 'Non-pimpinan')
                 ->assertPathIs('/jabatan/form-tambah');
         });
     }
@@ -138,6 +142,7 @@ class JabatanTest extends DuskTestCase
                 ->visit('/jabatan/form-tambah')
                 ->type('kode', 'STF')
                 ->type('nama', 'Staff')
+                ->select('posisi', 'Non-pimpinan')
                 ->assertPathIs('/jabatan/form-tambah');
         });
     }
@@ -159,6 +164,7 @@ class JabatanTest extends DuskTestCase
                 ->clickLink('Ubah')
                 ->type('kode', 'STF')
                 ->type('nama', 'Staff')
+                ->select('posisi', 'Non-pimpinan')
                 ->press('Simpan')
                 ->assertPathIs('/jabatan');
         });
@@ -181,6 +187,7 @@ class JabatanTest extends DuskTestCase
                 ->clickLink('Ubah')
                 ->type('kode', 'SPV')
                 ->type('nama', 'Supervisor')
+                ->select('posisi', 'Non-pimpinan')
                 ->press('Simpan')
                 ->assertPathIs('/jabatan');
         });

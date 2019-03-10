@@ -60,6 +60,27 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-xs-12">
+                                <label for="posisi">
+                                    Posisi
+                                </label>
+                                <select
+                                    name="posisi"
+                                    class="form-control"
+                                    id="posisi"
+                                >
+                                    <option value="1">
+                                        Pimpinan
+                                    </option>
+                                    <option value="2">
+                                        Non-pimpinan
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">
                         Simpan
                     </button>

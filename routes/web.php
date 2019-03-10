@@ -62,31 +62,67 @@ Route::group(['middleware' => 'auth:pengguna'], function(){
     });
     Route::group([
             'prefix' => 'pegawai',
-            'middleware' => 'role-super-admin'
+        ], function() {
+            Route::group(['middleware' => 'role-super-admin'], function(){
+                Route::get('/', [
+                    'uses' => 'PegawaiController@index',
+                    'as' => 'pegawai'
+                ]);
+                Route::get('/form-tambah', [
+                    'uses' => 'PegawaiController@create',
+                    'as' => 'pegawai.form.create'
+                ]);
+                Route::get('/form-ubah/{id}', [
+                    'uses' => 'PegawaiController@edit',
+                    'as' => 'pegawai.form.edit'
+                ]);
+                Route::post('/simpan', [
+                    'uses' => 'PegawaiController@store',
+                    'as' => 'pegawai.store'
+                ]);
+                Route::put('/ubah/{id}', [
+                    'uses' => 'PegawaiController@update',
+                    'as' => 'pegawai.update'
+                ]);
+                Route::delete('/hapus/{id}', [
+                    'uses' => 'PegawaiController@destroy',
+                    'as' => 'pegawai.delete'
+                ]);
+            });
+            // api pegawai
+            Route::group(['prefix' => 'api'], function(){
+                Route::get('/cari-pegawai-dari-bagian/{jabatan_id}', [
+                    'uses' => 'PegawaiController@apiFindPegawaiByBagian',
+                    'as' => 'pegawai.api.cari.pegawai.dari.bagian'
+                ]);
+            });
+    });
+    Route::group([
+            'prefix' => 'surat-masuk'
         ], function() {
             Route::get('/', [
-                'uses' => 'PegawaiController@index',
-                'as' => 'pegawai'
+                'uses' => 'SuratMasukController@index',
+                'as' => 'surat.masuk'
             ]);
             Route::get('/form-tambah', [
-                'uses' => 'PegawaiController@create',
-                'as' => 'pegawai.form.create'
+                'uses' => 'SuratMasukController@create',
+                'as' => 'surat.masuk.form.create'
             ]);
             Route::get('/form-ubah/{id}', [
-                'uses' => 'PegawaiController@edit',
-                'as' => 'pegawai.form.edit'
+                'uses' => 'SuratMasukController@edit',
+                'as' => 'surat.masuk.form.edit'
             ]);
             Route::post('/simpan', [
-                'uses' => 'PegawaiController@store',
-                'as' => 'pegawai.store'
+                'uses' => 'SuratMasukController@store',
+                'as' => 'surat.masuk.store'
             ]);
             Route::put('/ubah/{id}', [
-                'uses' => 'PegawaiController@update',
-                'as' => 'pegawai.update'
+                'uses' => 'SuratMasukController@update',
+                'as' => 'surat.masuk.update'
             ]);
             Route::delete('/hapus/{id}', [
-                'uses' => 'PegawaiController@destroy',
-                'as' => 'pegawai.delete'
+                'uses' => 'SuratMasukController@destroy',
+                'as' => 'surat.masuk.delete'
             ]);
     });
 });

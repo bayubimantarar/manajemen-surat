@@ -4,15 +4,29 @@
     <meta name="viewport" content="width=device-width">
     <link
         rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        href="/assets/css/bootstrap.css"
     />
     <link
         rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-    >
+        href="/assets/font-awesome/css/all.css"
+    />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab"
+    />
+    @yield('css')
     <style>
         body {
             background-color: #eee;
+            font-family: 'Lato', sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Roboto Slab', serif;
         }
         .container {
             margin-top: 20px;
@@ -32,18 +46,14 @@
 
     <script
         type="text/javascript"
-        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    >
-    </script>
+        src="/assets/js/jquery-3.3.1.js"
+    ></script>
     <script
         type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    >
-    </script>
-    <script
-        type="text/javascript"
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    >
-    </script>
+        src="/assets/js/bootstrap.js"
+    ></script>
+
+    <!-- custom different javascript in every module -->
+    @yield('js')
 </body>
 </html>
