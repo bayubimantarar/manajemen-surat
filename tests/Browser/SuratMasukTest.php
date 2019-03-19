@@ -111,8 +111,6 @@ class SuratMasukTest extends DuskTestCase
                 ->assertPathIs('/surat-masuk/form-tambah')
                 ->type('nomor', 'III/III/MMIX')
                 ->type('asal', 'Dinas Kependudukan')
-                ->select('jabatan_id', NULL)
-                ->select('pegawai_id', NULL)
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
