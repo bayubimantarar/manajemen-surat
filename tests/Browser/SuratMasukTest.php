@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use Storage;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -61,7 +62,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk');
         });
@@ -88,7 +89,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk/form-tambah');
         });
@@ -115,7 +116,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk/form-tambah');
         });
@@ -142,7 +143,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', NULL)
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk/form-tambah');
         });
@@ -167,7 +168,7 @@ class SuratMasukTest extends DuskTestCase
                 ->select('jabatan_id', '3')
                 ->select('pegawai_id', '1')
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk/form-tambah');
         });
@@ -221,7 +222,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', 'Kegiatan Sensus Penduduk')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk');
         });
@@ -249,7 +250,7 @@ class SuratMasukTest extends DuskTestCase
                 ->type('perihal', 'Kegiatan Acara Musik Tradisional')
                 ->click('#tanggal-terima')
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
-                ->attach('lampiran', storage_path('framework/testing/disposisi.pdf'))
+                ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
                 ->assertPathIs('/surat-masuk');
         });
