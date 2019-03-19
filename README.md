@@ -25,4 +25,5 @@ Test with phpunit
     ./vendor/bin/phpunit
 
 Test with laravel dusk
+    
     php artisan dusk
