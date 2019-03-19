@@ -7,7 +7,9 @@ use Crypt;
 use Storage;
 use Carbon\Carbon;
 use App\Models\Jabatan;
+use App\Models\Pegawai;
 use App\Models\SuratMasuk;
+use App\Mail\SuratMasukMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\SuratMasukRequest;
 
@@ -56,6 +58,10 @@ class SuratMasukController extends Controller
         $tanggalTerima = $suratMasukRequest->tanggal_terima;
         $lampiranFile = $suratMasukRequest->lampiran;
 
+        $findPegawaiEmail = Pegawai::find($pegawaiID);
+        $pegawaiEmail = $findPegawaiEmail->email;
+        $pegawaiName = $findPegawaiEmail->nama;
+
         if (!empty($lampiranFile)) {
             $lampiranFileName = $lampiranFile->getClientOriginalName();
             $lampiranFileExtension = $lampiranFile->getClientOriginalExtension();
@@ -92,6 +98,9 @@ class SuratMasukController extends Controller
 
             $storeSuratMasuk = SuratMasuk::create($data);
         }
+
+        Mail::to('bayubimantarar@gmail.com')
+            ->send(new SuratMasukMail($pegawaiName));
 
         return redirect('/surat-masuk')
             ->with([
