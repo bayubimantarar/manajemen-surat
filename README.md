@@ -23,3 +23,6 @@ Aplikasi manajemen surat masuk dan keluar STMIK Bandung
 Test with phpunit
 
     ./vendor/bin/phpunit
+
+Test with laravel dusk
+    php artisan dusk
