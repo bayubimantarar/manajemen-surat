@@ -15,13 +15,13 @@ class CreateSuratMasukTable extends Migration
     {
         Schema::create('surat_masuk', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('jabatan_id'); // tujuan surat masuk
-            $table->bigInteger('pengguna_id'); // tujuan surat masuk
-            $table->string('nomor', 75); // nomor surat masuk
-            $table->string('asal', 75); // asal surat masuk
-            $table->string('perihal', 150); // perihal surat masuk
-            $table->date('tanggal_terima'); // tanggal terima surat masuk
-            $table->string('lampiran', 150)->nullable(); // lampiran surat masuk
+            $table->bigInteger('jabatan_id');
+            $table->bigInteger('pegawai_id');
+            $table->string('nomor', 75);
+            $table->string('asal', 75);
+            $table->string('perihal', 150);
+            $table->date('tanggal_terima');
+            $table->string('lampiran', 250)->nullable();
             $table->timestamps();
         });
     }

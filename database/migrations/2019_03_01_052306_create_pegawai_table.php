@@ -20,6 +20,7 @@ class CreatePegawaiTable extends Migration
             $table->string('nomor_telepon', 75);
             $table->string('email', 150)->unique();
             $table->text('alamat');
+            $table->string('password', 150);
             $table->timestamps();
 
             $table

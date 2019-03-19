@@ -76,18 +76,30 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                                     class="form-control"
                                     id="posisi"
                                 >
-                                    <option value="1">
+                                    <option
+                                        value="Pimpinan"
+                                        {{ $jabatan->posisi == 'Pimpinan' ? 'selected' : ''}}
+                                    >
                                         Pimpinan
                                     </option>
-                                    <option value="2">
+                                    <option
+                                        value="Non-pimpinan"
+                                        {{ $jabatan->posisi == 'Non-pimpinan' ? 'selected' : ''}}
+                                    >
                                         Non-pimpinan
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <hr />
+                    <p>
+                        <code>
+                            Label bertanda (*) wajib diisi atau dipilih
+                        </code>
+                    </p>
                     <button type="submit" class="btn btn-primary">
-                        Simpan
+                        <i class="fa fa-check"></i> Simpan
                     </button>
                 </form>
               </div>

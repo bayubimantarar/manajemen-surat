@@ -19,21 +19,21 @@ class JabatanTableSeeder extends Seeder
                 [
                     'kode' => 'KADIN',
                     'nama' => 'Kepala Dinas',
-                    'posisi' => 2,
+                    'posisi' => 'Non-pimpinan',
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now()
                 ],
                 [
                     'kode' => 'SKR',
                     'nama' => 'Sekretaris',
-                    'posisi' => 2,
+                    'posisi' => 'Non-pimpinan',
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now()
                 ],
                 [
                     'kode' => 'KMR',
                     'nama' => 'Komisaris',
-                    'posisi' => 1,
+                    'posisi' => 'Pimpinan',
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now()
                 ]

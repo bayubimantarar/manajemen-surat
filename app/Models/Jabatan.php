@@ -19,4 +19,12 @@ class Jabatan extends Model
 
         return $jabatan;
     }
+
+    static function getJabatanPosisiPimpinan()
+    {
+        $jabatan = Jabatan::where('posisi', '=', 'Pimpinan')
+            ->get();
+
+        return $jabatan;
+    }
 }

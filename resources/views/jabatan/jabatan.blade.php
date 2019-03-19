@@ -51,10 +51,14 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
                                     <td>
-                                        @if($item->posisi == 1)
-                                            Pimpinan
+                                        @if($item->posisi == "Pimpinan")
+                                            <span class="badge badge-success">
+                                                Pimpinan
+                                            </span>
                                         @else
-                                            Non-pimpinan
+                                            <span class="badge badge-dark">
+                                                Non-pimpinan
+                                            </span>
                                         @endif
                                     </td>
                                     <td>

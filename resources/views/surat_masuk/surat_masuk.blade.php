@@ -44,7 +44,6 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                 <th scope="col">Tujuan</th>
                                 <th scope="col">Perihal</th>
                                 <th scope="col">Tanggal</th>
-                                <th scope="col">Status Disposisi</th>
                                 <th scope="col">Opsi</th>
                             </tr>
                         </thead>
@@ -53,10 +52,9 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                 <tr>
                                     <td>{{ $item->nomor }}</td>
                                     <td>{{ $item->asal }}</td>
-                                    <td>{{ $item->tujuan }}</td>
+                                    <td>{{ $item->jabatan->nama }}</td>
                                     <td>{{ $item->perihal }}</td>
-                                    <td>{{ $item->tanggal_terima }}</td>
-                                    <td>{{ $item->status_disposisi }}</td>
+                                    <td>{{ $item->tanggal_terima->formatLocalized('%d %B %Y') }}</td>
                                     <td>
                                         <a
                                             href="/surat-masuk/form-ubah/{{ $item->id }}"

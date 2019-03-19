@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
 use App\Models\Pegawai;
+use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use App\Http\Requests\PegawaiRequest;
 
@@ -16,7 +17,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = Pegawai::paginate(5);
+        $pegawai = Pegawai::orderByCreatedAtDesc()
+            ->paginate(5);
 
         return view('pegawai.pegawai', compact('pegawai'));
     }
@@ -28,8 +30,10 @@ class PegawaiController extends Controller
      */
     public function create()
     {
+        # set all jabatan data
         $jabatan = Jabatan::all();
 
+        # return to jabatan with array jabatan data
         return view('pegawai.form_create', compact('jabatan'));
     }
 
@@ -41,12 +45,16 @@ class PegawaiController extends Controller
      */
     public function store(PegawaiRequest $pegawaiRequest)
     {
+        # set faker
+        $faker = Faker::create();
+
         # set variable
         $jabatanID = $pegawaiRequest->jabatan_id;
         $nama = $pegawaiRequest->nama;
         $nomorTelepon = $pegawaiRequest->nomor_telepon;
         $email = $pegawaiRequest->email;
         $alamat = $pegawaiRequest->alamat;
+        $password = bcrypt($faker->password);
 
         # set array pegawai data
         $pegawaiData = [
@@ -54,12 +62,14 @@ class PegawaiController extends Controller
             'nama' => $nama,
             'nomor_telepon' => $nomorTelepon,
             'email' => $email,
-            'alamat' => $alamat
+            'alamat' => $alamat,
+            'password' => $password
         ];
 
         # store
         $storePegawai = Pegawai::create($pegawaiData);
 
+        # return to pegawai
         return redirect('/pegawai')
             ->with([
                 'notification' => 'Data berhasil disimpan!'

@@ -12,6 +12,14 @@ class Pegawai extends Model
         'nama',
         'nomor_telepon',
         'email',
-        'alamat'
+        'alamat',
+        'password'
     ];
+
+    static function orderByCreatedAtDesc()
+    {
+        $pegawai = Pegawai::orderBy('created_at', 'desc');
+
+        return $pegawai;
+    }
 }

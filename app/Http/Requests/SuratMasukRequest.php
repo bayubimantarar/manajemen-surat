@@ -26,8 +26,10 @@ class SuratMasukRequest extends FormRequest
         return [
             'asal' => 'required',
             'jabatan_id' => 'required',
+            'pegawai_id' => 'required',
             'perihal' => 'required',
-            'tanggal_terima' => 'required'
+            'tanggal_terima' => 'required',
+            'lampiran' => 'mimes:pdf'
         ];
     }
 
@@ -41,8 +43,10 @@ class SuratMasukRequest extends FormRequest
         return [
             'asal.required' => 'Asal perlu diisi!',
             'jabatan_id.required' => 'Pilih salah satu tujuan bagian!',
+            'pegawai_id.required' => 'Pilih salah satu tujuan pegawai!',
             'perihal.required' => 'Perihal perlu diisi!',
-            'tanggal_terima.required' => 'Tanggal terima perlu diisi!'
+            'tanggal_terima.required' => 'Tanggal terima perlu diisi!',
+            'lampiran.mimes' => 'Format lampiran harus berformat: pdf!'
         ];
     }
 }

@@ -24,7 +24,7 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-xs-12">
                                 <label for="kode">
-                                    Kode
+                                    Kode *
                                 </label>
                                 <input
                                     type="text"
@@ -44,7 +44,7 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-xs-12">
                                 <label for="nama">
-                                    Nama
+                                    Nama *
                                 </label>
                                 <input
                                     type="text"
@@ -71,18 +71,24 @@ Dashboard &raquo; Jabatan | Aplikasi Manajemen Surat
                                     class="form-control"
                                     id="posisi"
                                 >
-                                    <option value="1">
+                                    <option value="Pimpinan">
                                         Pimpinan
                                     </option>
-                                    <option value="2">
+                                    <option value="Non-pimpinan">
                                         Non-pimpinan
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <hr />
+                    <p>
+                        <code>
+                            Label bertanda (*) wajib diisi atau dipilih
+                        </code>
+                    </p>
                     <button type="submit" class="btn btn-primary">
-                        Simpan
+                        <i class="fa fa-check"></i> Simpan
                     </button>
                 </form>
               </div>

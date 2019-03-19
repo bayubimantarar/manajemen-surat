@@ -75,6 +75,7 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
+        # check jabatan and get jabatan data if exist
         $jabatan = Jabatan::findOrFail($id);
 
         return view('jabatan.form_edit', compact('jabatan'));

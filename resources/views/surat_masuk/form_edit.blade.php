@@ -22,7 +22,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                 </h3>
                 <hr />
                 <form
-                    action="/surat-masuk/simpan"
+                    action="/surat-masuk/ubah/{{ $suratMasuk->id }}"
                     method="post"
                     enctype="multipart/form-data"
                 >
@@ -31,9 +31,11 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                         name="_token"
                         value="{{ csrf_token()}}"
                     />
-                    @foreach($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
+                    <input
+                        type="hidden"
+                        name="_method"
+                        value="put"
+                    />
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-xs-12">
@@ -44,7 +46,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                     type="text"
                                     name="nomor"
                                     class="form-control {{ $errors->has('nomor') ? ' is-invalid' : '' }}"
-                                    value="{{ old('nomor') }}"
+                                    value="{{ $suratMasuk->nomor }}"
                                 />
                                 @if($errors->has('nomor'))
                                     <span class="invalid-feedback">
@@ -66,7 +68,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                     type="text"
                                     name="asal"
                                     class="form-control {{ $errors->has('asal') ? ' is-invalid' : '' }}"
-                                    value="{{ old('asal') }}"
+                                    value="{{ $suratMasuk->asal }}"
                                 />
                                 @if($errors->has('asal'))
                                     <span class="invalid-feedback">
@@ -93,7 +95,10 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                         --- Pilih Bagian ---
                                     </option>
                                     @foreach($jabatan as $item)
-                                        <option value="{{ $item->id }}">
+                                        <option
+                                            value="{{ $item->id }}"
+                                            {{ $suratMasuk->jabatan_id == $item->id ? 'selected' : ''}}
+                                        >
                                             {{ $item->nama }}
                                         </option>
                                     @endforeach
@@ -138,7 +143,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                     type="text"
                                     name="perihal"
                                     class="form-control {{ $errors->has('perihal') ? ' is-invalid' : '' }}"
-                                    value="{{ old('perihal') }}"
+                                    value="{{ $suratMasuk->perihal }}"
                                 />
                                 @if($errors->has('perihal'))
                                     <span class="invalid-feedback">
@@ -161,6 +166,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                         type="text"
                                         class="form-control tanggal_terima {{ $errors->has('tanggal_terima') ? ' is-invalid' : '' }}"
                                         id="tanggal-terima"
+                                        value="{{ $suratMasuk->tanggal_terima->format('d/m/Y') }}"
                                         style="cursor: pointer"
                                         readonly
                                     />
@@ -168,10 +174,11 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                         type="hidden"
                                         name="tanggal_terima"
                                         id="input-tanggal-terima"
+                                        value="{{ $suratMasuk->tanggal_terima->toDateString() }}"
                                     />
                                   <div class="input-group-append">
                                     <span class="input-group-text">
-                                        <i class="fa fa-calendar"></i>
+                                        <i class="fa fa-clock"></i>
                                     </span>
                                   </div>
                                     @if($errors->has('tanggal_terima'))
@@ -233,11 +240,48 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
     type="text/javascript"
     src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"
 ></script>
-<script
-    type="text/javascript"
-    src="/assets/bootstrap-datepicker/locales/bootstrap-datepicker.id.min.js"
-></script>
 <script type="text/javascript">
+    var jabatan_id = $("#tujuan-bagian").val();
+    var old_pegawai_id = {{ $suratMasuk->pegawai_id }};
+
+    if (jabatan_id != '') {
+        $.ajax({
+            url: '/pegawai/api/cari-pegawai-dari-bagian/'+jabatan_id,
+            data: 'get',
+            success: function(result) {
+                console.log(result);
+                if(result != undefined){
+                    if (result.length != 0) {
+                        // empty the options on select
+                        $('#tujuan-pegawai').empty();
+                        $('#tujuan-pegawai').removeAttr('readonly');
+
+                        // foreach the result assign insto variable
+                        $.each(result, function(key, value) {
+                            pegawai_options =
+                                '<option value="'+value.id+'"'+(old_pegawai_id == value.id ? 'selected' : '')+'>'
+                                    +value.nama+
+                                '</option>';
+
+                            // append into select tujuan pegawai
+                            $('#tujuan-pegawai').append(pegawai_options);
+                        });
+                    }else{
+                        $('#tujuan-pegawai').empty();
+
+                        pegawai_options =
+                            '<option value="">'+
+                                '--- Belum Ada Pegawai Di Bagian Ini ---'+
+                            '</option>';
+
+                        $('#tujuan-pegawai').append(pegawai_options);
+                        $('#tujuan-pegawai').attr('readonly', true);
+                    }
+                }
+            }
+        })
+    }
+
     $('#tujuan-bagian').click(function(){
         // set variable
         var jabatan_id = $(this).val();
@@ -250,21 +294,21 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                 data : 'get',
                 success: function(result) {
                     if(result != undefined){
-                        if(result.length != 0) {
+                        if (result.length != 0) {
                             // empty the options on select
                             $('#tujuan-pegawai').empty();
                             $('#tujuan-pegawai').removeAttr('readonly');
 
-                            // foreach the result assign into variable
+                            // foreach the result assign insto variable
                             $.each(result, function(key, value) {
                                 pegawai_options =
                                     '<option value="'+value.id+'">'
                                         +value.nama+
                                     '</option>';
-
-                                // append into select tujuan pegawai
-                                $('#tujuan-pegawai').append(pegawai_options);
                             });
+
+                            // append into select tujuan pegawai
+                            $('#tujuan-pegawai').append(pegawai_options);
                         }else{
                             $('#tujuan-pegawai').empty();
 
@@ -311,12 +355,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                 return full_date;
             },
             toValue: function (date, format, language) {
-                var day         = date.getDate();
-                var month       = date.getMonth()+1;
-                var year        = date.getFullYear();
-                var full_date   = year+'-'+month+'-'+date
-
-                return full_date;
+                //
             }
         }
     });
