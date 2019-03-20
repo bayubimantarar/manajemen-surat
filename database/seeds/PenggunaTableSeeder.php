@@ -17,14 +17,14 @@ class PenggunaTableSeeder extends Seeder
         $createPengguna = DB::table('pengguna')
             ->insert([
                 [
-                    'email' => 'bayubimantarar@gmail.com',
+                    'email' => 'superadmin@example.com',
                     'password' => bcrypt('secret'),
                     'role' => 'Super Admin',
                     'created_at' => Carbon\Carbon::now(),
                     'updated_at' => Carbon\Carbon::now()
                 ],
                 [
-                    'email' => 'restiwulandari@gmail.com',
+                    'email' => 'sekretaris@exmaple.com',
                     'password' => bcrypt('secret'),
                     'role' => 'Sekretaris',
                     'created_at' => Carbon\Carbon::now(),

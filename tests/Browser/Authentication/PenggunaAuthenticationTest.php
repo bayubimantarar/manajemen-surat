@@ -33,7 +33,7 @@ class PenggunaAuthenticationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit('/autentikasi/form-login')
-                ->type('email', 'bayubimantarar@gmail.com')
+                ->type('email', 'superadmin@example.com')
                 ->type('password', 'secret')
                 ->press('Masuk')
                 ->assertPathIs('/')
@@ -69,7 +69,7 @@ class PenggunaAuthenticationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit('/autentikasi/form-login')
-                ->type('email', 'bayubimantarar@gmail.com')
+                ->type('email', 'superadmin@example.com')
                 ->press('Masuk')
                 ->assertPathIs('/autentikasi/form-login')
                 ->assertSee('Kata sandi perlu diisi!');
@@ -104,7 +104,7 @@ class PenggunaAuthenticationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit('/autentikasi/form-login')
-                ->type('email', 'bayubimantarar@gmail.com')
+                ->type('email', 'superadmin@example.com')
                 ->type('password', 'secret')
                 ->press('Masuk')
                 ->assertPathIs('/')

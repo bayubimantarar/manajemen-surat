@@ -32,3 +32,23 @@ Test with phpunit
 Test with laravel dusk
     
     php artisan dusk
+
+## How to Use
+Pada manajemen surat masuk dan surat keluar terdapat 2 pengguna yaitu :
+1. Super Admin
+2. Sekretaris
+
+### Super Admin
+Super Admin berfungsi sebagai pengatur semua data yang ada pada aplikasi, super admin bisa mengelola data jabatan, pegawai, surat masuk, dan surat keluar
+Akun :
+
+    email : superadmin@example.com
+    password : secret
+
+
+### Sekretaris
+Sekretaris berfungsi sebagai seorang yang mengarsipkan surat masuk dan surat keluar pada aplikasi
+Akun :
+
+    email : sekretaris@example.com
+    password : secret

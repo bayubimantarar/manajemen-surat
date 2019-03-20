@@ -99,8 +99,8 @@ class SuratMasukController extends Controller
             $storeSuratMasuk = SuratMasuk::create($data);
         }
 
-        // Mail::to('bayubimantarar@gmail.com')
-        //     ->send(new SuratMasukMail($pegawaiName));
+        Mail::to('bayubimantarar@gmail.com')
+            ->send(new SuratMasukMail($pegawaiName));
 
         return redirect('/surat-masuk')
             ->with([
