@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">
         <img src="/assets/img/logo-surat.png" width="40" height="40" alt="">
-        Aplikasi Manajemen Surat
+        Manajemen Surat
     </a>
     <button
         class="navbar-toggler"
@@ -17,23 +17,23 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <!-- left navbar -->
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <li class="nav-item {{ Request::segment(1) == 'surat-masuk' ? 'active' : '' }}">
             <a class="nav-link" href="/surat-masuk">
                 <i class="fa fa-envelope"></i> Surat Masuk
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li class="nav-item {{ Request::segment(1) == 'surat-keluar' ? 'active' : '' }}">
+            <a class="nav-link" href="/surat-keluar">
                 <i class="fa fa-envelope-open-text"></i> Surat Keluar
             </a>
           </li>
           @if(Auth::guard('pengguna')->User()->role == "Super Admin")
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) == 'jabatan' ? 'active' : '' }}">
                 <a class="nav-link" href="/jabatan">
                     <i class="fa fa-sort-alpha-up"></i> Jabatan
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) == 'pegawai' ? 'active' : '' }}">
                 <a class="nav-link" href="/pegawai">
                     <i class="fa fa-users"></i> Pegawai
                 </a>

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Mail;
-use Crypt;
 use Storage;
-use Carbon\Carbon;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
-use App\Models\SuratMasuk;
-use App\Mail\SuratMasukMail;
+use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
-use App\Http\Requests\SuratMasukRequest;
+use App\Http\Requests\SuratKeluarRequest;
 
-class SuratMasukController extends Controller
+class SuratKeluarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,11 +18,9 @@ class SuratMasukController extends Controller
      */
     public function index()
     {
-        $suratMasuk = SuratMasuk::with('jabatan')
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
+        $suratKeluar = SuratKeluar::paginate(5);
 
-        return view('surat_masuk.surat_masuk', compact('suratMasuk'));
+        return view('surat_keluar.surat_keluar', compact('suratKeluar'));
     }
 
     /**
@@ -38,7 +32,7 @@ class SuratMasukController extends Controller
     {
         $jabatan = Jabatan::all();
 
-        return view('surat_masuk.form_create', compact('jabatan'));
+        return view('surat_keluar.form_create', compact('jabatan'));
     }
 
     /**
@@ -47,16 +41,16 @@ class SuratMasukController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SuratMasukRequest $suratMasukRequest)
+    public function store(SuratKeluarRequest $suratKeluarRequest)
     {
         # set variable
-        $nomor = $suratMasukRequest->nomor;
-        $asal = $suratMasukRequest->asal;
-        $jabatanID = $suratMasukRequest->jabatan_id;
-        $pegawaiID = $suratMasukRequest->pegawai_id;
-        $perihal = $suratMasukRequest->perihal;
-        $tanggalTerima = $suratMasukRequest->tanggal_terima;
-        $lampiranFile = $suratMasukRequest->lampiran;
+        $nomor = $suratKeluarRequest->nomor;
+        $tujuan = $suratKeluarRequest->tujuan;
+        $jabatanID = $suratKeluarRequest->jabatan_id;
+        $pegawaiID = $suratKeluarRequest->pegawai_id;
+        $perihal = $suratKeluarRequest->perihal;
+        $tanggalKirim = $suratKeluarRequest->tanggal_kirim;
+        $lampiranFile = $suratKeluarRequest->lampiran;
 
         $findPegawaiEmail = Pegawai::find($pegawaiID);
         $pegawaiEmail = $findPegawaiEmail->email;
@@ -71,38 +65,35 @@ class SuratMasukController extends Controller
                 'jabatan_id' => $jabatanID,
                 'pegawai_id' => $pegawaiID,
                 'nomor' => $nomor,
-                'asal' => $asal,
+                'tujuan' => $tujuan,
                 'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima,
+                'tanggal_kirim' => $tanggalKirim,
                 'lampiran' => $lampiranFileName
             ];
 
             $uploadFileLampiran = Storage::disk('uploads')
                 ->putFileAs(
-                    'documents/surat-masuk',
+                    'documents/surat-keluar',
                     $lampiranFile,
                     $lampiranFileName
                 );
 
-            $storeSuratMasuk = SuratMasuk::create($data);
+            $updateSuratKeluar = SuratKeluar::create($data);
         }else{
             # set array data
             $data = [
                 'jabatan_id' => $jabatanID,
                 'pegawai_id' => $pegawaiID,
                 'nomor' => $nomor,
-                'asal' => $asal,
+                'tujuan' => $tujuan,
                 'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima
+                'tanggal_kirim' => $tanggalKirim
             ];
 
-            $storeSuratMasuk = SuratMasuk::create($data);
+            $updateSuratKeluar = SuratKeluar::create($data);
         }
 
-        // Mail::to('bayubimantarar@gmail.com')
-        //     ->send(new SuratMasukMail($pegawaiName));
-
-        return redirect('/surat-masuk')
+        return redirect('/surat-keluar')
             ->with([
                 'notification' => 'Data berhasil disimpan!'
             ]);
@@ -127,11 +118,11 @@ class SuratMasukController extends Controller
      */
     public function edit($id)
     {
-        $checkSuratMasuk = SuratMasuk::findOrFail($id);
-        $suratMasuk = $checkSuratMasuk;
+        $checkSuratKeluar = SuratKeluar::findOrFail($id);
+        $suratKeluar = $checkSuratKeluar;
         $jabatan = Jabatan::all();
 
-        return view('surat_masuk.form_edit', compact('suratMasuk', 'jabatan'));
+        return view('surat_keluar.form_edit', compact('suratKeluar', 'jabatan'));
     }
 
     /**
@@ -141,38 +132,38 @@ class SuratMasukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SuratMasukRequest $suratMasukRequest, $id)
+    public function update(SuratKeluarRequest $suratKeluarRequest, $id)
     {
         # set variable
-        $nomor = $suratMasukRequest->nomor;
-        $asal = $suratMasukRequest->asal;
-        $jabatanID = $suratMasukRequest->jabatan_id;
-        $pegawaiID = $suratMasukRequest->pegawai_id;
-        $perihal = $suratMasukRequest->perihal;
-        $tanggalTerima = $suratMasukRequest->tanggal_terima;
-        $lampiranFile = $suratMasukRequest->lampiran;
+        $nomor = $suratKeluarRequest->nomor;
+        $tujuan = $suratKeluarRequest->tujuan;
+        $jabatanID = $suratKeluarRequest->jabatan_id;
+        $pegawaiID = $suratKeluarRequest->pegawai_id;
+        $perihal = $suratKeluarRequest->perihal;
+        $tanggalKirim = $suratKeluarRequest->tanggal_kirim;
+        $lampiranFile = $suratKeluarRequest->lampiran;
 
         if (!empty($lampiranFile)) {
             $lampiranFileName = $lampiranFile->getClientOriginalName();
             $lampiranFileExtension = $lampiranFile->getClientOriginalExtension();
 
-            $checkOldLampiranFile = SuratMasuk::find($id);
+            $checkOldLampiranFile = SuratKeluar::find($id);
             $oldLampiranFile = $checkOldLampiranFile->lampiran;
 
             if(!empty($oldLampiranFile)){
                 $deleteLampiranFile = Storage::disk('uploads')
-                    ->delete('documents/surat-masuk/'.$oldLampiranFile);
+                    ->delete('documents/surat-keluar/'.$oldLampiranFile);
 
                 $uploadFileLampiran = Storage::disk('uploads')
                     ->putFileAs(
-                        'documents/surat-masuk',
+                        'documents/surat-keluar',
                         $lampiranFile,
                         $lampiranFileName
                     );
             }else{
                 $uploadFileLampiran = Storage::disk('uploads')
                     ->putFileAs(
-                        'documents/surat-masuk',
+                        'documents/surat-keluar',
                         $lampiranFile,
                         $lampiranFileName
                     );
@@ -183,13 +174,13 @@ class SuratMasukController extends Controller
                 'jabatan_id' => $jabatanID,
                 'pegawai_id' => $pegawaiID,
                 'nomor' => $nomor,
-                'asal' => $asal,
+                'tujuan' => $tujuan,
                 'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima,
+                'tanggal_kirim' => $tanggalKirim,
                 'lampiran' => $lampiranFileName
             ];
 
-            $storeSuratMasuk = SuratMasuk::where('id', $id)
+            $updateSuratKeluar = SuratKeluar::where('id', $id)
                 ->update($data);
         }else{
             # set array data
@@ -197,16 +188,16 @@ class SuratMasukController extends Controller
                 'jabatan_id' => $jabatanID,
                 'pegawai_id' => $pegawaiID,
                 'nomor' => $nomor,
-                'asal' => $asal,
+                'tujuan' => $tujuan,
                 'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima
+                'tanggal_kirim' => $tanggalKirim
             ];
 
-            $storeSuratMasuk = SuratMasuk::where('id', $id)
+            $updateSuratKeluar = SuratKeluar::where('id', $id)
                 ->update($data);
         }
 
-        return redirect('/surat-masuk')
+        return redirect('/surat-keluar')
             ->with([
                 'notification' => 'Data berhasil disimpan!'
             ]);
@@ -220,19 +211,19 @@ class SuratMasukController extends Controller
      */
     public function destroy($id)
     {
-        $findSuratMasuk = SuratMasuk::findOrFail($id);
+        $findSuratKeluar = SuratKeluar::findOrFail($id);
 
-        $suratMasuk = SuratMasuk::find($id);
+        $SuratKeluar = SuratKeluar::find($id);
 
         # check lampiran file if exist
-        if (!empty($suratMasuk->lampiran)) {
+        if (!empty($SuratKeluar->lampiran)) {
             $deleteLampiranFile = Storage::disk('uploads')
-                ->delete('documents/surat-masuk/'.$suratMasuk->lampiran);
+                ->delete('documents/surat-keluar/'.$SuratKeluar->lampiran);
         }
 
-        $deleteSuratMasuk = SuratMasuk::destroy($id);
+        $deleteSuratKeluar = SuratKeluar::destroy($id);
 
-        return redirect('/surat-masuk')
+        return redirect('/surat-keluar')
             ->with([
                 'notification' => 'Data berhasil dihapus!'
             ]);

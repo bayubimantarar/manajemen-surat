@@ -97,9 +97,7 @@ Route::group(['middleware' => 'auth:pengguna'], function(){
                 ]);
             });
     });
-    Route::group([
-            'prefix' => 'surat-masuk'
-        ], function() {
+    Route::group(['prefix' => 'surat-masuk'], function() {
             Route::get('/', [
                 'uses' => 'SuratMasukController@index',
                 'as' => 'surat.masuk'
@@ -123,6 +121,32 @@ Route::group(['middleware' => 'auth:pengguna'], function(){
             Route::delete('/hapus/{id}', [
                 'uses' => 'SuratMasukController@destroy',
                 'as' => 'surat.masuk.delete'
+            ]);
+    });
+    Route::group(['prefix' => 'surat-keluar'], function() {
+            Route::get('/', [
+                'uses' => 'SuratKeluarController@index',
+                'as' => 'surat.keluar'
+            ]);
+            Route::get('/form-tambah', [
+                'uses' => 'SuratKeluarController@create',
+                'as' => 'surat.keluar.form.create'
+            ]);
+            Route::get('/form-ubah/{id}', [
+                'uses' => 'SuratKeluarController@edit',
+                'as' => 'surat.keluar.form.edit'
+            ]);
+            Route::post('/simpan', [
+                'uses' => 'SuratKeluarController@store',
+                'as' => 'surat.keluar.store'
+            ]);
+            Route::put('/ubah/{id}', [
+                'uses' => 'SuratKeluarController@update',
+                'as' => 'surat.keluar.update'
+            ]);
+            Route::delete('/hapus/{id}', [
+                'uses' => 'SuratKeluarController@destroy',
+                'as' => 'surat.keluar.delete'
             ]);
     });
 });
