@@ -24,7 +24,7 @@ class PenggunaTableSeeder extends Seeder
                     'updated_at' => Carbon\Carbon::now()
                 ],
                 [
-                    'email' => 'sekretaris@exmaple.com',
+                    'email' => 'sekretaris@example.com',
                     'password' => bcrypt('secret'),
                     'role' => 'Sekretaris',
                     'created_at' => Carbon\Carbon::now(),
