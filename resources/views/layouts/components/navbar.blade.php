@@ -37,7 +37,12 @@
                 <a class="nav-link" href="/pegawai">
                     <i class="fa fa-users"></i> Pegawai
                 </a>
-              </li>
+            </li>
+            <li class="nav-item {{ Request::segment(1) == 'pengguna' ? 'active' : '' }}">
+                <a class="nav-link" href="/pengguna">
+                    <i class="fa fa-users-cog"></i> Pengguna
+                </a>
+            </li>
           @endif
         </ul>
         <!-- right navbar -->
