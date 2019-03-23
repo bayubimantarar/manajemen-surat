@@ -198,6 +198,24 @@ class SuratMasukTest extends DuskTestCase
      * @test
      * @return void
      */
+    public function sendEmailToPegawaiEmail()
+    {
+        $pengguna = \App\Models\Pengguna::find(1);
+
+        $this->browse(function (Browser $browser) use($pengguna) {
+            $browser
+                ->loginAs($pengguna, 'pengguna')
+                ->visit('/surat-masuk')
+                ->clickLink('Kirim email')
+                ->assertPathIs('/surat-masuk');
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     * @test
+     * @return void
+     */
     public function updateSuratMasukSameData()
     {
         $pengguna = \App\Models\Pengguna::find(1);
