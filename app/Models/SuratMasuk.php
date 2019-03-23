@@ -15,7 +15,8 @@ class SuratMasuk extends Model
         'asal',
         'perihal',
         'tanggal_terima',
-        'lampiran'
+        'lampiran',
+        'status_email'
     ];
 
     protected $dates = [
@@ -25,5 +26,10 @@ class SuratMasuk extends Model
     public function jabatan()
     {
         return $this->belongsTo('App\Models\Jabatan');
+    }
+
+    public function pegawai()
+    {
+        return $this->belongsTo('App\Models\Pegawai');
     }
 }

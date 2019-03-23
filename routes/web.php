@@ -110,6 +110,10 @@ Route::group(['middleware' => 'auth:pengguna'], function(){
                 'uses' => 'SuratMasukController@edit',
                 'as' => 'surat.masuk.form.edit'
             ]);
+            Route::get('/kirim-email/{id}', [
+                'uses' => 'SuratMasukController@sendEmail',
+                'as' => 'surat.masuk.send_email'
+            ]);
             Route::post('/simpan', [
                 'uses' => 'SuratMasukController@store',
                 'as' => 'surat.masuk.store'

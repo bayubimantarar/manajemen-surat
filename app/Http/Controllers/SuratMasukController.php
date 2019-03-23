@@ -62,50 +62,100 @@ class SuratMasukController extends Controller
         $pegawaiEmail = $findPegawaiEmail->email;
         $pegawaiName = $findPegawaiEmail->nama;
 
-        if (!empty($lampiranFile)) {
-            $lampiranFileName = $lampiranFile->getClientOriginalName();
-            $lampiranFileExtension = $lampiranFile->getClientOriginalExtension();
+        try {
+            Mail::to($pegawaiEmail)
+                ->send(new SuratMasukMail($pegawaiName));
 
-            # set array data
-            $data = [
-                'jabatan_id' => $jabatanID,
-                'pegawai_id' => $pegawaiID,
-                'nomor' => $nomor,
-                'asal' => $asal,
-                'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima,
-                'lampiran' => $lampiranFileName
-            ];
+            if (!empty($lampiranFile)) {
+                $lampiranFileName = $lampiranFile->getClientOriginalName();
+                $lampiranFileExtension = $lampiranFile->getClientOriginalExtension();
 
-            $uploadFileLampiran = Storage::disk('uploads')
-                ->putFileAs(
-                    'documents/surat-masuk',
-                    $lampiranFile,
-                    $lampiranFileName
-                );
+                # set array data
+                $data = [
+                    'jabatan_id' => $jabatanID,
+                    'pegawai_id' => $pegawaiID,
+                    'nomor' => $nomor,
+                    'asal' => $asal,
+                    'perihal' => $perihal,
+                    'tanggal_terima' => $tanggalTerima,
+                    'lampiran' => $lampiranFileName,
+                    'status_email' => 'Terkirim'
+                ];
 
-            $storeSuratMasuk = SuratMasuk::create($data);
-        }else{
-            # set array data
-            $data = [
-                'jabatan_id' => $jabatanID,
-                'pegawai_id' => $pegawaiID,
-                'nomor' => $nomor,
-                'asal' => $asal,
-                'perihal' => $perihal,
-                'tanggal_terima' => $tanggalTerima
-            ];
+                $uploadFileLampiran = Storage::disk('uploads')
+                    ->putFileAs(
+                        'documents/surat-masuk',
+                        $lampiranFile,
+                        $lampiranFileName
+                    );
 
-            $storeSuratMasuk = SuratMasuk::create($data);
+                $storeSuratMasuk = SuratMasuk::create($data);
+            }else{
+                # set array data
+                $data = [
+                    'jabatan_id' => $jabatanID,
+                    'pegawai_id' => $pegawaiID,
+                    'nomor' => $nomor,
+                    'asal' => $asal,
+                    'perihal' => $perihal,
+                    'tanggal_terima' => $tanggalTerima,
+                    'status_email' => 'Terkirim'
+                ];
+
+                $storeSuratMasuk = SuratMasuk::create($data);
+            }
+
+            return redirect('/surat-masuk')
+                ->with([
+                    'status' => 'success',
+                    'notification' => 'Data berhasil disimpan, email berhasil terkirim!'
+                ]);
+        } catch (\Exception $e) {
+            if (!empty($lampiranFile)) {
+                $lampiranFileName = $lampiranFile->getClientOriginalName();
+                $lampiranFileExtension = $lampiranFile->getClientOriginalExtension();
+
+                # set array data
+                $data = [
+                    'jabatan_id' => $jabatanID,
+                    'pegawai_id' => $pegawaiID,
+                    'nomor' => $nomor,
+                    'asal' => $asal,
+                    'perihal' => $perihal,
+                    'tanggal_terima' => $tanggalTerima,
+                    'lampiran' => $lampiranFileName,
+                    'status_email' => 'Belum terkirim'
+                ];
+
+                $uploadFileLampiran = Storage::disk('uploads')
+                    ->putFileAs(
+                        'documents/surat-masuk',
+                        $lampiranFile,
+                        $lampiranFileName
+                    );
+
+                $storeSuratMasuk = SuratMasuk::create($data);
+            }else{
+                # set array data
+                $data = [
+                    'jabatan_id' => $jabatanID,
+                    'pegawai_id' => $pegawaiID,
+                    'nomor' => $nomor,
+                    'asal' => $asal,
+                    'perihal' => $perihal,
+                    'tanggal_terima' => $tanggalTerima,
+                    'status_email' => 'Belum terkirim'
+                ];
+
+                $storeSuratMasuk = SuratMasuk::create($data);
+            }
+
+            return redirect('/surat-masuk')
+                ->with([
+                    'status' => 'warning',
+                    'notification' => 'Data berhasil disimpan, tetapi email gagal terkirim!'
+                ]);
         }
-
-        Mail::to('bayubimantarar@gmail.com')
-            ->send(new SuratMasukMail($pegawaiName));
-
-        return redirect('/surat-masuk')
-            ->with([
-                'notification' => 'Data berhasil disimpan!'
-            ]);
     }
 
     /**
@@ -236,5 +286,46 @@ class SuratMasukController extends Controller
             ->with([
                 'notification' => 'Data berhasil dihapus!'
             ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sendEmail($id)
+    {
+        $findSuratMasuk = SuratMasuk::findOrFail($id);
+
+        $suratMasuk = SuratMasuk::with('pegawai')
+            ->find($id);
+
+        $pegawaiEmail   = $suratMasuk->pegawai->email;
+        $pegawaiName    = $suratMasuk->pegawai->nama;
+
+        try {
+            Mail::to($pegawaiEmail)
+                ->send(new SuratMasukMail($pegawaiName));
+
+            $data = [
+                'status_email' => 'Terkirim'
+            ];
+
+            $updateSuratMasuk = SuratMasuk::where('id', $id)
+                ->update($data);
+
+            return redirect('/surat-masuk')
+                ->with([
+                    'status' => 'success',
+                    'notification' => 'Email berhasil terkirim!'
+                ]);
+        } catch (\Exception $e) {
+            return redirect('/surat-masuk')
+                ->with([
+                    'status' => 'warning',
+                    'notification' => 'Email gagal terkirim!'
+                ]);
+        }
     }
 }

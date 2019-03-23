@@ -22,6 +22,7 @@ class CreateSuratMasukTable extends Migration
             $table->string('perihal', 150);
             $table->date('tanggal_terima');
             $table->string('lampiran', 250)->nullable();
+            $table->string('status_email', 25)->nullable();
             $table->timestamps();
         });
     }

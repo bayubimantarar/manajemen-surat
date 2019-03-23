@@ -16,7 +16,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                 <hr />
                 @if(session('notification'))
                     <div
-                        class="alert alert-success alert-dismissible fade show"
+                        class="alert alert-{{ session('status') }} alert-dismissible fade show"
                         role="alert"
                     >
                         {{ session('notification') }}
@@ -44,6 +44,7 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                 <th scope="col">Tujuan</th>
                                 <th scope="col">Perihal</th>
                                 <th scope="col">Tanggal</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Opsi</th>
                             </tr>
                         </thead>
@@ -56,6 +57,29 @@ Dashboard &raquo; Surat Masuk | Aplikasi Manajemen Surat
                                     <td>{{ $item->perihal }}</td>
                                     <td>{{ $item->tanggal_terima->formatLocalized('%d %B %Y') }}</td>
                                     <td>
+                                        @if($item->status_email == 'Terkirim')
+                                            <span
+                                                class="badge badge-success"
+                                            >
+                                                {{ $item->status_email }}
+                                            </span>
+                                        @else
+                                            <span
+                                                class="badge badge-warning text-white"
+                                            >
+                                                {{ $item->status_email }}
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($item->status_email != 'Sudah terkirim')
+                                            <a
+                                                href="/surat-masuk/kirim-email/{{ $item->id }}"
+                                                class="btn btn-sm btn-primary"
+                                            >
+                                                <i class="fa fa-envelope"></i> Kirim email
+                                            </a>
+                                        @endif
                                         <a
                                             href="/surat-masuk/form-ubah/{{ $item->id }}"
                                             class="btn btn-sm btn-warning text-white"
