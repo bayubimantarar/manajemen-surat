@@ -11,10 +11,18 @@ use App\Models\Pegawai;
 use App\Models\SuratMasuk;
 use App\Mail\SuratMasukMail;
 use Illuminate\Http\Request;
+use App\Services\LampiranFileService;
 use App\Http\Requests\SuratMasukRequest;
 
 class SuratMasukController extends Controller
 {
+    protected $lampiranFileServe;
+
+    public function __construct(LampiranFileService $lampiranFileService)
+    {
+        $this->lampiranFileServe = $lampiranFileService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,12 +90,9 @@ class SuratMasukController extends Controller
                     'status_email' => 'Terkirim'
                 ];
 
-                $uploadFileLampiran = Storage::disk('uploads')
-                    ->putFileAs(
-                        'documents/surat-masuk',
-                        $lampiranFile,
-                        $lampiranFileName
-                    );
+                $uploadLampiranFile = $this
+                    ->lampiranFileServe
+                    ->uploadLampiranFile($lampiranFile, $lampiranFileName);
 
                 $storeSuratMasuk = SuratMasuk::create($data);
             }else{
@@ -127,12 +132,9 @@ class SuratMasukController extends Controller
                     'status_email' => 'Belum terkirim'
                 ];
 
-                $uploadFileLampiran = Storage::disk('uploads')
-                    ->putFileAs(
-                        'documents/surat-masuk',
-                        $lampiranFile,
-                        $lampiranFileName
-                    );
+                $uploadLampiranFile = $this
+                    ->lampiranFileServe
+                    ->uploadLampiranFile($lampiranFile, $lampiranFileName);
 
                 $storeSuratMasuk = SuratMasuk::create($data);
             }else{
@@ -213,19 +215,13 @@ class SuratMasukController extends Controller
                 $deleteLampiranFile = Storage::disk('uploads')
                     ->delete('documents/surat-masuk/'.$oldLampiranFile);
 
-                $uploadFileLampiran = Storage::disk('uploads')
-                    ->putFileAs(
-                        'documents/surat-masuk',
-                        $lampiranFile,
-                        $lampiranFileName
-                    );
+                $uploadLampiranFile = $this
+                    ->lampiranFileServe
+                    ->uploadLampiranFile($lampiranFile, $lampiranFileName);
             }else{
-                $uploadFileLampiran = Storage::disk('uploads')
-                    ->putFileAs(
-                        'documents/surat-masuk',
-                        $lampiranFile,
-                        $lampiranFileName
-                    );
+                $uploadLampiranFile = $this
+                    ->lampiranFileServe
+                    ->uploadLampiranFile($lampiranFile, $lampiranFileName);
             }
 
             # set array data
@@ -273,11 +269,13 @@ class SuratMasukController extends Controller
         $findSuratMasuk = SuratMasuk::findOrFail($id);
 
         $suratMasuk = SuratMasuk::find($id);
+        $lampiranFileName = $suratMasuk->lampiran;
 
         # check lampiran file if exist
-        if (!empty($suratMasuk->lampiran)) {
-            $deleteLampiranFile = Storage::disk('uploads')
-                ->delete('documents/surat-masuk/'.$suratMasuk->lampiran);
+        if (!empty($lampiranFileName)) {
+            $deleteLampiranFile = $this
+                ->lampiranFileServe
+                ->deleteLampiranFile($lampiranFileName);
         }
 
         $deleteSuratMasuk = SuratMasuk::destroy($id);
