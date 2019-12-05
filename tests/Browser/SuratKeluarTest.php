@@ -113,7 +113,7 @@ class SuratKeluarTest extends DuskTestCase
                 ->click('div.datepicker > div.datepicker-days > table.table-condensed > tbody > tr > td.today.day')
                 ->attach('lampiran', public_path('disposisi.pdf'))
                 ->press('Simpan')
-                ->assertPathIs('/surat-keluar/form-tambah');
+                ->assertPathIs('/surat-keluar');
         });
     }
 
