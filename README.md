@@ -1,6 +1,6 @@
-[![Build Status](https://img.shields.io/travis/bayubimantarar/suratapp.svg?style=flat-square)](https://travis-ci.org/bayubimantarar/suratapp)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/bayubimantarar/suratapp/pulls)
-[![GitHub](https://img.shields.io/github/license/bayubimantarar/suratapp.svg?style=flat-square)]
+[![Build Status](https://img.shields.io/travis/bayubimantarar/manajemen-surat.svg?style=flat-square)](https://travis-ci.org/bayubimantarar/manajemen-surat)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/bayubimantarar/manajemen-surat/pulls)
+[![GitHub](https://img.shields.io/github/license/bayubimantarar/manajemen-surat.svg?style=flat-square)](https://github.com/bayubimantarar/manajemen-surat/blob/master/LICENSE)
 
 # Manajemen Surat Masuk & Surat Keluar
 Manajemen surat masuk & surat keluar adalah sebuah aplikasi yang bertujuan untuk :
