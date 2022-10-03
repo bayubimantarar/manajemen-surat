@@ -40,7 +40,7 @@ Pada manajemen surat masuk dan surat keluar terdapat 2 pengguna yaitu:
 
 ### Super Admin
 Super Admin berfungsi sebagai pengatur semua data yang ada pada aplikasi, super admin bisa mengelola data jabatan, pegawai, surat masuk, dan surat keluar
-Akun :
+Akun:
 
     email : superadmin@example.com
     password : secret
