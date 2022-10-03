@@ -6,7 +6,7 @@
 Manajemen surat masuk & surat keluar adalah sebuah aplikasi yang bertujuan untuk :
 1. Memudahkan sekretaris pimpinan dalam mengadministrasikan surat masuk dan surat keluar
 2. Memudahkan pencarian kembali surat masuk dan surat keluar
-3. _paperless_, karena tidak perlu memperbanyak surat (_copy_)
+3. _Paperless_, karena tidak perlu memperbanyak surat (_copy_)
 
 ## Installation
 1. Clone repository
