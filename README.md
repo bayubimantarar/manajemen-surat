@@ -34,7 +34,7 @@ Test with laravel dusk
     php artisan dusk
 
 ## How to Use
-Pada manajemen surat masuk dan surat keluar terdapat 2 pengguna yaitu :
+Pada manajemen surat masuk dan surat keluar terdapat 2 pengguna yaitu:
 1. Super Admin
 2. Sekretaris
 
