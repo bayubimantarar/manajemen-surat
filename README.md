@@ -48,7 +48,7 @@ Akun:
 
 ### Sekretaris
 Sekretaris berfungsi sebagai seorang yang mengarsipkan surat masuk dan surat keluar pada aplikasi
-Akun :
+Akun:
 
     email : sekretaris@example.com
     password : secret
